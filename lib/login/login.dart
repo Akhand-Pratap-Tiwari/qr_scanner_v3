@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qr_scanner_v3/login/components/collection_not_found_dialog.dart';
-import 'package:qr_scanner_v3/login/components/db_connect_error_dialog.dart';
+// import 'package:qr_scanner_v3/login/components/db_connect_error_dialog.dart';
 import 'package:qr_scanner_v3/login/components/id_pass_error_dialog.dart';
 import 'package:qr_scanner_v3/secrets/secrets.dart';
 
 import '../database/database.dart';
 import '../home.dart';
+import 'components/database_error_dialog.dart';
+import 'components/functions.dart';
 import 'components/screen_load_dialog.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,51 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   var passController = TextEditingController();
   var collecController = TextEditingController()..text = defaultCollection;
   var dbController = TextEditingController()..text = defaultDb;
-
-  bool _isCorrectIdPass({required idController, required passController}) {
-    var id = idController.text.trim();
-    var pass = passController.text.trim();
-    if (id == '' || pass == '' || pass != univPass || id != univId) {
-      return false;
-    }
-    return true;
-  }
-
-  Future<void> _dbValidator(BuildContext context) async {
-    var collec = collecController.text.trim();
-    var database = dbController.text.trim();
-    await MongoDatabase.connect(collecName: collec, dbName: database).then(
-      (db) async {
-        await db.open();
-        db.getCollectionNames().then((collecList) {
-          if (collecList.contains(collec)) {
-            MongoDatabase.userCollection = db.collection(collec);
-            Navigator.of(context).pop(); //For Loading
-            Navigator.of(context).pop(); //For Login Screen
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const HomePage(),
-              ),
-            );
-          } else {
-            Navigator.of(context).pop(); //For Loading Screen
-            showDialog(
-              context: context,
-              builder: (context) => CollectionNotFound(),
-            );
-          }
-        });
-      },
-    ).onError(
-      (error, stackTrace) {
-        Navigator.of(context).pop(); //For loading
-        showDialog(
-          context: context,
-          builder: (context) => DatabaseConnectError(),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       FloatingActionButton.extended(
                         onPressed: () {
-                          if (_isCorrectIdPass(
+                          if (isCorrectIdPass(
                                   idController: idController,
                                   passController: passController) ==
                               true) {
@@ -133,7 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                               context: context,
                               builder: (context) => CircularLoadDialog(),
                             );
-                            
+
+                            String collec = collecController.text.trim();
+                            String database = dbController.text.trim();
+                            checkDbAndGotoHome(context, collec, database);
                           } else {
                             showDialog(
                               context: context,
@@ -152,7 +112,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
