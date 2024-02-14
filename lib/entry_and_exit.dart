@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -34,6 +33,30 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
     'Nothing Here',
     style: TextStyle(color: Colors.white),
   );
+
+  void startScanning() {
+    setState(() {
+    mobileScannerController.start();
+      isScanning = true;
+      widget1 = const Text(
+        'Nothing Here',
+        style: TextStyle(color: Colors.white),
+      );
+      gradient = blackGradient;
+    });
+  }
+
+  void stopScanning() {
+    setState(() {
+      mobileScannerController.stop();
+      isScanning = false;
+      widget1 = const Text(
+        'Nothing Here',
+        style: TextStyle(color: Colors.white),
+      );
+      gradient = blackGradient;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +111,8 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                               debugPrint("debug: ${barcode.rawValue!}");
                               User user = await MongoDatabase.fetch(
                                   regId: barcode.rawValue!);
-                                  // MongoDatabase.fetch(
-                                  // regId: barcode.rawValue!).then((value) => debugPrint("debug: "+value.toString()));
+                              // MongoDatabase.fetch(
+                              // regId: barcode.rawValue!).then((value) => debugPrint("debug: "+value.toString()));
                               setState(() {
                                 mobileScannerController.stop();
                                 isScanning = false;
@@ -156,17 +179,7 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                             ),
                           ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            isScanning = false;
-                            mobileScannerController.stop();
-                            widget1 = const Text(
-                              'Nothing Here',
-                              style: TextStyle(color: Colors.white),
-                            );
-                            gradient = blackGradient;
-                          });
-                        },
+                        onPressed: () => stopScanning(),
                         icon: const Icon(Icons.pages_rounded),
                         label: const Text('Stop'),
                       )
@@ -181,17 +194,7 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            mobileScannerController.start();
-                            setState(() {
-                              isScanning = true;
-                              widget1 = const Text(
-                                'Nothing Here',
-                                style: TextStyle(color: Colors.white),
-                              );
-                              gradient = blackGradient;
-                            });
-                          },
+                          onPressed: () => startScanning(),
                           icon: const Icon(Icons.document_scanner_outlined),
                           label: const Text('Scan'),
                         ),
