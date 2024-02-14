@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -86,7 +85,7 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                           onDetect: (capture) async {
                             final List<Barcode> barcodes = capture.barcodes;
                             for (final barcode in barcodes) {
-                              debugPrint("debug: " + barcode.rawValue!);
+                              debugPrint("debug: ${barcode.rawValue!}");
                               User user = await MongoDatabase.fetch(
                                   regId: barcode.rawValue!);
                                   // MongoDatabase.fetch(

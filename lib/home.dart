@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
-import 'database/database.dart';
 import 'entry_and_exit.dart';
 
 class HomePage extends StatefulWidget {

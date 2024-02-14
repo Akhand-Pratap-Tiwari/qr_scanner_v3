@@ -36,7 +36,7 @@ Future<void> checkDbAndGotoHome(
                 Navigator.of(context).pop(); //For Loading Screen
                 showDialog(
                   context: context,
-                  builder: (context) => CollectionNotFound(),
+                  builder: (context) => const CollectionNotFound(),
                 );
               }
             },
@@ -47,7 +47,7 @@ Future<void> checkDbAndGotoHome(
           Navigator.of(context).pop(); //For Loading Screen
           showDialog(
             context: context,
-            builder: (context) => DatabaseError(),
+            builder: (context) => const DatabaseError(),
           );
         },
       );

@@ -5,7 +5,7 @@ class CollectionNotFound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return const Dialog(
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Text("Can't find collection..."),

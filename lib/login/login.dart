@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qr_scanner_v3/login/components/collection_not_found_dialog.dart';
 // import 'package:qr_scanner_v3/login/components/db_connect_error_dialog.dart';
 import 'package:qr_scanner_v3/login/components/id_pass_error_dialog.dart';
 import 'package:qr_scanner_v3/secrets/secrets.dart';
 
-import '../database/database.dart';
-import '../home.dart';
-import 'components/database_error_dialog.dart';
 import 'components/functions.dart';
 import 'components/screen_load_dialog.dart';
 
@@ -88,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                             showDialog(
                               barrierDismissible: false,
                               context: context,
-                              builder: (context) => CircularLoadDialog(),
+                              builder: (context) => const CircularLoadDialog(),
                             );
 
                             String collec = collecController.text.trim();
@@ -97,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                           } else {
                             showDialog(
                               context: context,
-                              builder: (context) => IdPassError(),
+                              builder: (context) => const IdPassError(),
                             );
                           }
                         },
