@@ -12,7 +12,7 @@ Operations:
 
 It can be used by multiple persons in parallel for scanning distinct tickets.
 
-### [Demo Video Here](https://drive.google.com/file/d/1Bps0DRkwoGMf37rxnY-qhH-dzGyzJkpi/view?usp=drive_link).
+### [Demo Video Here](https://drive.google.com/file/d/1gnie6OlPAmqUTedwsQ36_4Wtypj09GQ8/view?usp=drive_link).
 
 ## Getting Started
 
